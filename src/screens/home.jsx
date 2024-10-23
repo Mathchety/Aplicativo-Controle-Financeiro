@@ -284,58 +284,7 @@ export default function Home() {
       </View>
 
       {/* Gráfico de Saldos */}
-      {barData.labels.length >=0 ? (
-        <View style={styles.chartContainer}>
-          <Text style={styles.chartTitle}>Saldo Mensal</Text>
-          <ScrollView
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            ref={scrollViewRef}
-            contentContainerStyle={styles.chartScrollView}
-          ><BarChart
-              data={{
-                labels: barData.labels,
-                datasets: barData.datasets,
-              }}
-              width={barData.labels.length * 70} // Largura dinâmica baseada no número de saldos
-              height={220}
-              fromZero={true}
-              showValuesOnTopOfBars={true}
-              showBarTops={false}
-              showsHorizontalScrollIndicator={true}
-              withInnerLines={true}
-              chartConfig={{
-                backgroundColor: "#ffffff",
-                backgroundGradientFrom: "#ffffff",
-                backgroundGradientTo: "#ffffff",
-                decimalPlaces: 2,
-                color: (opacity = 1) => `rgba(76, 175, 80, ${opacity})`, // Verde para entradas
-                labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                style: {
-                  borderRadius: 16,
-                },
-                propsForBackgroundLines: {
-                  stroke: "#e0e0e0",
-                  strokeDasharray: "", // Desabilita linhas tracejadas
-                },
-                barPercentage: .8,
-                useShadowColorFromDataset: false,
-              }}
-              style={{
-                marginVertical: 9,
-                borderRadius: 16,
-                paddingRight: 70 // Espaçamento à direita para visualização
-              }}
-                yAxisSuffix="R$"
-                yAxisInterval={1}
-              verticalLabelRotation={-45} // Rotação dos rótulos para melhor visualização
-            />
-          </ScrollView>
-        </View>
-      ) : (
-        <Text style={styles.noDataText}>Sem dados disponíveis para o gráfico.</Text>
-      )}
-
+       
       {/* Totais do Mês */}
       <View style={styles.totalsContainer}>
         <View style={styles.totalBox}>

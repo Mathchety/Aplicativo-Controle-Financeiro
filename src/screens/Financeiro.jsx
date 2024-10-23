@@ -15,10 +15,6 @@ import { useFocusEffect } from "@react-navigation/native"
 import { format, addMonths, subMonths } from "date-fns"
 import Icon from "react-native-vector-icons/FontAwesome"
 import {
-  Menu,
-  MenuOptions,
-  MenuOption,
-  MenuTrigger,
   MenuProvider,
 } from "react-native-popup-menu"
 
@@ -169,15 +165,14 @@ const CategoryList = ({ title, items, handleEdit, handleDelete }) => (
               R$ {item.value ? item.value.toFixed(2) : "0.00"}
             </Text>
           </View>
-          <Menu>
-            <MenuTrigger>
-              <Icon name="cog" size={20} color="gray" />
-            </MenuTrigger>
-            <MenuOptions>
-              <MenuOption onSelect={() => handleEdit(item)} text="Editar" />
-              <MenuOption onSelect={() => handleDelete(item)} text="Excluir" />
-            </MenuOptions>
-          </Menu>
+          <View style={styles.iconContainer}>
+            <TouchableOpacity onPress={() => handleEdit(item)}>
+              <Icon name="cog" size={20} color="gray" style={styles.icon} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => handleDelete(item)}>
+              <Icon name="trash" size={20} color="red" style={styles.icon} />
+            </TouchableOpacity>
+          </View>
         </View>
       ))}
     </ScrollView>
@@ -261,6 +256,13 @@ const styles = StyleSheet.create({
   itemName: { fontSize: 18, color: "#333" },
   itemValue: { fontSize: 16, color: "#4CAF50", fontWeight: "bold" },
   itemValueDespesas: { fontSize: 16, color: "#F44336", fontWeight: "bold" },
+  iconContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  icon: {
+    marginLeft: 10,
+  },
   inputContainer: {
     flexDirection: "row",
     alignItems: "center",
