@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react"
+import React, { useState, useCallback } from "react";
 import {
   View,
   Text,
@@ -9,59 +9,57 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
-} from "react-native"
-import AsyncStorage from "@react-native-async-storage/async-storage"
-import { useFocusEffect } from "@react-navigation/native"
-import { format, addMonths, subMonths } from "date-fns"
-import Icon from "react-native-vector-icons/FontAwesome"
-import {
-  MenuProvider,
-} from "react-native-popup-menu"
+} from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
+import { format, addMonths, subMonths } from "date-fns";
+import Icon from "react-native-vector-icons/FontAwesome";
+import { MenuProvider } from "react-native-popup-menu";
 
 export default function Financeiro() {
-  const [data, setData] = useState([])
-  const [currentMonth, setCurrentMonth] = useState(new Date())
-  const [modalVisible, setModalVisible] = useState(false)
-  const [selectedItem, setSelectedItem] = useState(null)
-  const [name, setName] = useState("")
-  const [value, setValue] = useState("")
+  const [data, setData] = useState([]);
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [name, setName] = useState("");
+  const [value, setValue] = useState("");
 
   const fetchData = async () => {
     try {
-      const storedData = await AsyncStorage.getItem("financeData")
+      const storedData = await AsyncStorage.getItem("financeData");
       if (storedData) {
-        const parsedData = JSON.parse(storedData)
-        const monthKey = format(currentMonth, "yyyy-MM")
-        setData(parsedData[monthKey]?.transactions || [])
+        const parsedData = JSON.parse(storedData);
+        const monthKey = format(currentMonth, "yyyy-MM");
+        setData(parsedData[monthKey]?.transactions || []);
       }
     } catch (e) {
-      console.error(e)
+      console.error(e);
     }
-  }
+  };
 
   useFocusEffect(
     useCallback(() => {
-      fetchData()
+      fetchData();
     }, [currentMonth])
-  )
+  );
 
   const handleEdit = (item) => {
-    setSelectedItem(item)
-    setName(item.name)
-    setValue(item.value.toString())
-    setModalVisible(true)
-  }
+    setSelectedItem(item);
+    setName(item.name);
+    setValue(item.value.toString());
+    setModalVisible(true);
+  };
 
   const handleDelete = async (item) => {
-    const newData = data.filter((i) => i !== item)
-    setData(newData)
-    const storedData = await AsyncStorage.getItem("financeData")
-    const parsedData = JSON.parse(storedData)
-    const monthKey = format(currentMonth, "yyyy-MM")
-    parsedData[monthKey].transactions = newData
-    await AsyncStorage.setItem("financeData", JSON.stringify(parsedData))
-    fetchData()
-  }
+    const newData = data.filter((i) => i !== item);
+    setData(newData);
+    const storedData = await AsyncStorage.getItem("financeData");
+    const parsedData = JSON.parse(storedData);
+    const monthKey = format(currentMonth, "yyyy-MM");
+    parsedData[monthKey].transactions = newData;
+    await AsyncStorage.setItem("financeData", JSON.stringify(parsedData));
+    fetchData();
+  };
 
   const handleDeleteAll = async () => {
     Alert.alert(
@@ -76,34 +74,34 @@ export default function Financeiro() {
           text: "Excluir",
           onPress: async () => {
             try {
-              await AsyncStorage.removeItem("financeData")
-              setData([])
+              await AsyncStorage.removeItem("financeData");
+              setData([]);
             } catch (e) {
-              console.error(e)
+              console.error(e);
             }
           },
           style: "destructive",
         },
       ]
-    )
-  }
+    );
+  };
 
   const saveEdit = async () => {
     const newData = data.map((i) =>
       i === selectedItem ? { ...i, name, value: parseFloat(value) } : i
-    )
-    setData(newData)
-    const storedData = await AsyncStorage.getItem("financeData")
-    const parsedData = JSON.parse(storedData)
-    const monthKey = format(currentMonth, "yyyy-MM")
-    parsedData[monthKey].transactions = newData
-    await AsyncStorage.setItem("financeData", JSON.stringify(parsedData))
-    setModalVisible(false)
-    fetchData()
-  }
+    );
+    setData(newData);
+    const storedData = await AsyncStorage.getItem("financeData");
+    const parsedData = JSON.parse(storedData);
+    const monthKey = format(currentMonth, "yyyy-MM");
+    parsedData[monthKey].transactions = newData;
+    await AsyncStorage.setItem("financeData", JSON.stringify(parsedData));
+    setModalVisible(false);
+    fetchData();
+  };
 
-  const entradas = data.filter((item) => item.type === "entrada")
-  const despesas = data.filter((item) => item.type === "despesa")
+  const entradas = data.filter((item) => item.type === "entrada");
+  const despesas = data.filter((item) => item.type === "despesa");
 
   return (
     <MenuProvider>
@@ -111,16 +109,22 @@ export default function Financeiro() {
         <Text style={styles.title}>Financeiro</Text>
         <Text style={styles.subtitle}>{format(currentMonth, "MMMM yyyy")}</Text>
         <View style={styles.buttonContainer}>
-          <Button
-            title="Anterior"
+          <TouchableOpacity
             onPress={() => setCurrentMonth(subMonths(currentMonth, 1))}
-          />
-          <Button
-            title="Próximo"
+          >
+            <Text style={styles.navButton}>{"<"}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
             onPress={() => setCurrentMonth(addMonths(currentMonth, 1))}
-          />
+          >
+            <Text style={styles.navButton}>{">"}</Text>
+          </TouchableOpacity>
         </View>
-        <Button title="Excluir Tudo" onPress={handleDeleteAll} color="#ff0000" />
+        <Button
+          title="Excluir Tudo"
+          onPress={handleDeleteAll}
+          color="#ff0000"
+        />
         <CategoryList
           title="Entradas"
           items={entradas}
@@ -144,7 +148,7 @@ export default function Financeiro() {
         />
       </View>
     </MenuProvider>
-  )
+  );
 }
 
 const CategoryList = ({ title, items, handleEdit, handleDelete }) => (
@@ -177,7 +181,7 @@ const CategoryList = ({ title, items, handleEdit, handleDelete }) => (
       ))}
     </ScrollView>
   </>
-)
+);
 
 const EditModal = ({
   visible,
@@ -217,10 +221,10 @@ const EditModal = ({
       </TouchableOpacity>
     </View>
   </Modal>
-)
+);
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: "#f0f0f0" },
+  container: { flex: 1, padding: 16, backgroundColor: "#f5f5f5" },
   title: {
     fontSize: 28,
     fontWeight: "bold",
@@ -231,7 +235,7 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 22,
     fontWeight: "600",
-    color: "#666",
+    color: "#212121",
     marginVertical: 8,
     borderBottomWidth: 1,
     borderBottomColor: "#ddd",
@@ -247,15 +251,15 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     padding: 12,
-    backgroundColor: "#fff",
+    backgroundColor: "#FFF",
     borderRadius: 8,
     marginBottom: 8,
     elevation: 2,
   },
   itemTextContainer: { flexDirection: "column", alignItems: "flex-start" },
-  itemName: { fontSize: 18, color: "#333" },
-  itemValue: { fontSize: 16, color: "#4CAF50", fontWeight: "bold" },
-  itemValueDespesas: { fontSize: 16, color: "#F44336", fontWeight: "bold" },
+  itemName: { fontSize: 18, color: "#212121" },
+  itemValue: { fontSize: 16, color: "#2E7D32", fontWeight: "bold" },
+  itemValueDespesas: { fontSize: 16, color: "#FF8C00", fontWeight: "bold" },
   iconContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -291,4 +295,10 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   closeButton: { color: "blue", marginTop: 15 },
-})
+  navButton: {
+    fontSize: 36,
+    color: "#212121",
+    paddingHorizontal: 10,
+    height: 35,
+  },
+});

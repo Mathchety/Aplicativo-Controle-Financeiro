@@ -13,12 +13,7 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
-import {
-  format,
-  parseISO,
-  addMonths,
-  subMonths,
-} from "date-fns";
+import { format, parseISO, addMonths, subMonths } from "date-fns";
 import { BarChart } from "react-native-chart-kit";
 
 export default function Home() {
@@ -153,7 +148,8 @@ export default function Home() {
           const currentMonthTransactions = parsedData[mk]?.transactions || [];
           const previousMonthSaldo = parsedData[previousMonthKey]?.saldo || 0;
 
-          const saldoAtual = calculateSaldo(currentMonthTransactions) + previousMonthSaldo;
+          const saldoAtual =
+            calculateSaldo(currentMonthTransactions) + previousMonthSaldo;
           parsedData[mk].saldo = saldoAtual;
         });
 
@@ -234,12 +230,15 @@ export default function Home() {
   useEffect(() => {
     if (scrollViewRef.current && saldos.length > 0) {
       const currentMonthKey = format(currentMonth, "yyyy-MM");
-      const index = saldos.findIndex((item) => item.monthKey === currentMonthKey);
+      const index = saldos.findIndex(
+        (item) => item.monthKey === currentMonthKey
+      );
 
       if (index !== -1) {
         const barWidth = 60; // Largura estimada de cada barra
         const padding = 10; // Espaçamento entre as barras
-        const offset = index * (barWidth + padding) - (screenWidth / 2) + (barWidth / 2);
+        const offset =
+          index * (barWidth + padding) - screenWidth / 2 + barWidth / 2;
 
         // Assegure-se de que o offset seja pelo menos 0
         const scrollTo = offset > 0 ? offset : 0;
@@ -268,13 +267,13 @@ export default function Home() {
           style={[styles.addButton, styles.entradaButton]}
           onPress={() => setModalEntradaVisible(true)}
         >
-          <Text style={styles.buttonText}>Adicionar Entrada</Text>
+          <Text style={styles.buttonText}>Add Receita</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.addButton, styles.despesaButton]}
           onPress={() => setModalDespesaVisible(true)}
         >
-          <Text style={styles.buttonText}>Adicionar Despesa</Text>
+          <Text style={styles.buttonText}>Add Despesa</Text>
         </TouchableOpacity>
       </View>
 
@@ -284,7 +283,7 @@ export default function Home() {
       </View>
 
       {/* Gráfico de Saldos */}
-       
+
       {/* Totais do Mês */}
       <View style={styles.totalsContainer}>
         <View style={styles.totalBox}>
@@ -398,11 +397,11 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     padding: 16,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#F5F5F5",
   },
   chartContainer: {
-    width: '100%',
-    alignItems: 'center', // Centraliza o gráfico
+    width: "100%",
+    alignItems: "center", // Centraliza o gráfico
     marginVertical: 16,
     backgroundColor: "#ffffff",
     padding: 16,
@@ -419,15 +418,15 @@ const styles = StyleSheet.create({
   },
   chartTitle: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 12,
-    color: "#333333",
-    textAlign: 'center', // Centraliza o título
+    color: "#212121",
+    textAlign: "center", // Centraliza o título
   },
   noDataText: {
     fontSize: 16,
     color: "#888", // Cor do texto para dados não disponíveis
-    textAlign: 'center', // Centraliza o texto
+    textAlign: "center", // Centraliza o texto
     marginVertical: 16,
   },
   headerContainer: {
@@ -441,11 +440,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     flex: 1,
-    color: "#333333",
+    color: "##212121",
   },
   navButton: {
-    fontSize: 24,
-    color: "#007AFF",
+    fontSize: 30,
+    color: "#212121",
     paddingHorizontal: 10,
   },
   buttonRow: {
@@ -460,10 +459,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   entradaButton: {
-    backgroundColor: "#4CAF50",
+    backgroundColor: "#2E7D32",
   },
   despesaButton: {
-    backgroundColor: "#F44336",
+    backgroundColor: "#FF8C00",
   },
   buttonText: {
     color: "#ffffff",
@@ -490,7 +489,7 @@ const styles = StyleSheet.create({
   saldoText: {
     fontSize: 20,
     fontWeight: "600",
-    color: "#333333",
+    color: "#212121",
   },
   totalsContainer: {
     flexDirection: "row",
@@ -501,18 +500,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   totalLabel: {
-    fontSize: 16,
-    color: "#555555",
+    fontSize: 18,
+    color: "##9E9E9E",
   },
   totalValue: {
-    fontSize: 18,
+    fontSize: 19,
     fontWeight: "bold",
   },
   entradasColor: {
-    color: "#4CAF50",
+    color: "#2E7D32",
   },
   despesasColor: {
-    color: "#F44336",
+    color: "#FF8C00",
   },
   modalOverlay: {
     flex: 1,
@@ -525,7 +524,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 20,
     elevation: 5,
-    width: '100%',
+    width: "100%",
   },
   modalTitle: {
     fontSize: 20,
@@ -541,7 +540,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginVertical: 8,
     fontSize: 16,
-    color: "#333333",
+    color: "##212121",
   },
   typeContainer: {
     flexDirection: "row",
@@ -557,10 +556,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
   },
   typeButtonSelectedEntrada: {
-    backgroundColor: "#4CAF50",
+    backgroundColor: "#2E7D32",
   },
   typeButtonSelectedDespesa: {
-    backgroundColor: "#F44336",
+    backgroundColor: "#FF8C00",
   },
   typeButtonDisabled: {
     backgroundColor: "#ffffff",
