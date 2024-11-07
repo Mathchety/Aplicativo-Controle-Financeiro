@@ -11,18 +11,17 @@ const CalcularJurosSimples = () => {
 
     const calculateCompoundInterest = () => {
         const P = parseFloat(principal);
-        const r = parseFloat(rate) / 100;
+        const i = parseFloat(rate) / 100;
         const t = parseFloat(time);
-        const A = P * Math.pow((1 + r), t);
-        setResult(A.toFixed(2));
+        const J = P * i * t;
+        setResult(J.toFixed(2));
     };
-
     const fetchCDIRate = async () => {
         try {
-            const response = await fetch('https://api.bcb.gov.br/dados/serie/bcdata.sgs.4391/dados?formato=json');
+            const response = await fetch('https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados?formato=json');
             const data = await response.json();
             const latestRate = data[data.length - 1].valor; // Pega o valor mais recente
-            setRate(latestRate.toString());
+            setRate((latestRate / 12).toString());
         } catch (error) {
             console.error('Erro ao buscar a taxa do CDI:', error);
         }
@@ -68,7 +67,9 @@ const CalcularJurosSimples = () => {
 
             {result && !isNaN(time) ? (
                 <View style={styles.resultContainer}>
-                    <Text style={styles.resultText}>Em {time} meses você terá: R$ {result}</Text>
+                    <Text style={styles.resultText}>Em {time} meses, ganho em juros anual: R$ {result}</Text>
+                    <Text style={styles.resultText}>Total: R$ {(parseFloat(result) + parseFloat(principal)).toFixed(2)}</Text>
+
                 </View>
             ) : null}
         </View>
@@ -145,11 +146,15 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         alignItems: 'center',
         width: '100%',
+        textAlign: 'center',
+        gap: 10,
+        
     },
     resultText: {
-        fontSize: 20,
+        fontSize: 17,
         fontWeight: 'bold',
         color: '#333',
+        textAlign: 'center',
     },
 });
 

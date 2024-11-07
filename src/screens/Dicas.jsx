@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { View, Text, ActivityIndicator, StyleSheet, ScrollView, Dimensions } from 'react-native';
+import { View, Text, ActivityIndicator, StyleSheet, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
 
@@ -10,10 +10,12 @@ const Dicas = () => {
     const [selic, setSelic] = useState(null);
     const [exchangeRates, setExchangeRates] = useState(null);
     const [loading, setLoading] = useState(true);
+    
+    const [showTips, setShowTips] = useState(false);
 
     const fetchData = async () => {
         try {
-            const cdiResponse = await fetch('https://api.bcb.gov.br/dados/serie/bcdata.sgs.4391/dados?formato=json');
+            const cdiResponse = await fetch('https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados?formato=json');
             const cdiData = await cdiResponse.json();
             const selicResponse = await fetch('https://api.bcb.gov.br/dados/serie/bcdata.sgs.4390/dados?formato=json');
             const selicData = await selicResponse.json();
@@ -55,7 +57,7 @@ const Dicas = () => {
                 {/* Card CDI */}
                 <View style={styles.card}>
                     <Text style={styles.label}>CDI</Text>
-                    <Text style={styles.value}>{cdi}</Text>
+                    <Text style={styles.value}>{cdi}%</Text>
                     <MaterialIcons name="trending-up" size={20} color="#00796b" />
                 </View>
 
@@ -92,34 +94,48 @@ const Dicas = () => {
                     </>
                 )}
 
-                {/* Dicas Financeiras */}
-                <Text style={styles.header}>Dicas Financeiras</Text>
-                <View style={styles.dicasContent}>
-                    <View style={styles.tipContainer}>
-                        <Text style={styles.tipText}>1. Diversifique seus investimentos: Evite concentrar todo o capital em um único ativo para reduzir riscos.</Text>
+                    {/* Botão para mostrar/ocultar dicas financeiras */}
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={() => setShowTips(!showTips)}
+                        >
+                            <Text style={styles.buttonText}>
+                                {showTips ? 'Esconder Dicas' : 'Mostrar Dicas'}
+                            </Text>
+                        </TouchableOpacity>
                     </View>
-                    <View style={styles.tipContainer}>
-                        <Text style={styles.tipText}>2. Controle seus gastos: Manter um controle dos seus gastos mensais ajuda a não extrapolar o orçamento.</Text>
-                    </View>
-                    <View style={styles.tipContainer}>
-                        <Text style={styles.tipText}>3. Tenha uma reserva de emergência: Um fundo de emergência para cobrir 6 meses de despesas é essencial para imprevistos.</Text>
-                    </View>
-                    <View style={styles.tipContainer}>
-                        <Text style={styles.tipText}>4. Invista em conhecimento: Estude sobre diferentes tipos de investimentos e como eles funcionam antes de aplicar seu dinheiro.</Text>
-                    </View>
-                    <View style={styles.tipContainer}>
-                        <Text style={styles.tipText}>5. Cuidado com o crédito fácil: Evite financiamentos e empréstimos a juros altos, eles podem comprometer seu orçamento a longo prazo.</Text>
-                    </View>
-                    <View style={styles.tipContainer}>
-                        <Text style={styles.tipText}>6. Aproveite os juros compostos: Comece a investir cedo, mesmo com valores baixos, para aproveitar o poder dos juros compostos ao longo do tempo.</Text>
-                    </View>
-                    <View style={styles.tipContainer}>
-                        <Text style={styles.tipText}>7. Revise periodicamente seu orçamento: Faça ajustes no seu orçamento mensal conforme suas prioridades e condições financeiras mudam.</Text>
-                    </View>
-                    <View style={styles.tipContainer}>
-                        <Text style={styles.tipText}>8. Pague suas dívidas o quanto antes: Dívidas acumulam juros, então se livrar delas deve ser uma prioridade para evitar que cresçam.</Text>
-                    </View>
-                </View>
+
+                    {/* Dicas Financeiras Condicional */}
+                    {showTips && (
+                        <View style={styles.dicasContent}>
+                            <View style={styles.tipContainer}>
+                                <Text style={styles.tipText}>1. Diversifique seus investimentos: Evite concentrar todo o capital em um único ativo para reduzir riscos.</Text>
+                            </View>
+                            <View style={styles.tipContainer}>
+                                <Text style={styles.tipText}>2. Controle seus gastos: Manter um controle dos seus gastos mensais ajuda a não extrapolar o orçamento.</Text>
+                            </View>
+                            <View style={styles.tipContainer}>
+                                <Text style={styles.tipText}>3. Tenha uma reserva de emergência: Um fundo de emergência para cobrir 6 meses de despesas é essencial para imprevistos.</Text>
+                            </View>
+                            <View style={styles.tipContainer}>
+                                <Text style={styles.tipText}>4. Invista em conhecimento: Estude sobre diferentes tipos de investimentos e como eles funcionam antes de aplicar seu dinheiro.</Text>
+                            </View>
+                            <View style={styles.tipContainer}>
+                                <Text style={styles.tipText}>5. Cuidado com o crédito fácil: Evite financiamentos e empréstimos a juros altos, eles podem comprometer seu orçamento a longo prazo.</Text>
+                            </View>
+                            <View style={styles.tipContainer}>
+                                <Text style={styles.tipText}>6. Aproveite os juros compostos: Comece a investir cedo, mesmo com valores baixos, para aproveitar o poder dos juros compostos ao longo do tempo.</Text>
+                            </View>
+                            <View style={styles.tipContainer}>
+                                <Text style={styles.tipText}>7. Revise periodicamente seu orçamento: Faça ajustes no seu orçamento mensal conforme suas prioridades e condições financeiras mudam.</Text>
+                            </View>
+                            <View style={styles.tipContainer}>
+                                <Text style={styles.tipText}>8. Pague suas dívidas o quanto antes: Dívidas acumulam juros, então se livrar delas deve ser uma prioridade para evitar que cresçam.</Text>
+                            </View>
+                        </View>
+                    )}
+                
 
                 {/* Espaço em branco abaixo */}
                 <View style={styles.spacer} />
@@ -193,6 +209,22 @@ const styles = StyleSheet.create({
     },
     spacer: {
         height: 100, // Ajuste a altura do espaço conforme necessário
+    },
+    buttonContainer: {
+        width: '100%',
+        alignItems: 'center',
+        marginTop: 25,
+    },
+    button: {
+        backgroundColor: '#00796b',
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 10,
+        height: 50,
+    },
+    buttonText: {
+        color: '#ffffff',
+        fontSize: 18,
     },
 });
 

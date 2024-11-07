@@ -191,7 +191,7 @@ export default StyleSheet.create({
       padding: 1, // Ajusta o padding do botão ativo
     },
     tabText: {
-      fontSize: 10, // Reduz o tamanho do texto
+      fontSize: 13, // Reduz o tamanho do texto
       marginTop: 3, // Ajusta o espaçamento entre o ícone e o texto
     },
 });

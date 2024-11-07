@@ -126,7 +126,7 @@ const MainTabNavigator = ({ navigation }) => {
             tabBarIcon: ({ color, focused }) => (
               <View style={[styles.tabButton, focused ? styles.activeTab : null]}>
                 <Icon name="bulb-outline" color={color} size={30} />
-                <Text style={[styles.tabText, { color }]}>Dicas</Text>
+                <Text style={[styles.tabText, { color }]}>Cotação</Text>
               </View>
             ),
           }}

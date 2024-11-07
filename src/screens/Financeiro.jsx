@@ -257,7 +257,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   itemTextContainer: { flexDirection: "column", alignItems: "flex-start" },
-  itemName: { fontSize: 18, color: "#212121" },
+  itemName: { fontSize: 18, color: "#212121"},
   itemValue: { fontSize: 16, color: "#2E7D32", fontWeight: "bold" },
   itemValueDespesas: { fontSize: 16, color: "#FF8C00", fontWeight: "bold" },
   iconContainer: {
@@ -275,6 +275,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     marginBottom: 12,
     paddingHorizontal: 8,
+    width: "70%",
   },
   currency: { fontSize: 18, color: "#333", marginRight: 4 },
   inputValue: { flex: 1, height: 40 },
@@ -285,6 +286,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     paddingHorizontal: 8,
     borderRadius: 4,
+    width: "70%",
   },
   modalView: {
     margin: 20,
