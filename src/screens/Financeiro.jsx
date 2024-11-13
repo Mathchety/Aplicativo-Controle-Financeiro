@@ -133,7 +133,7 @@ export default function Financeiro() {
         />
         <CategoryList
           title="Despesas"
-          items={despesas}
+          items={despesas }
           handleEdit={handleEdit}
           handleDelete={handleDelete}
         />
@@ -224,11 +224,11 @@ const EditModal = ({
 );
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: "#f5f5f5" },
+  container: { flex: 1, padding: 16, backgroundColor: "#E8F5E9" },
   title: {
     fontSize: 28,
     fontWeight: "bold",
-    color: "#333",
+    color: "#388E3C",
     marginBottom: 16,
     textAlign: "center",
   },
@@ -257,7 +257,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   itemTextContainer: { flexDirection: "column", alignItems: "flex-start" },
-  itemName: { fontSize: 18, color: "#212121"},
+  itemName: { fontSize: 18, color: "#212121" },
   itemValue: { fontSize: 16, color: "#2E7D32", fontWeight: "bold" },
   itemValueDespesas: { fontSize: 16, color: "#FF8C00", fontWeight: "bold" },
   iconContainer: {
@@ -278,7 +278,15 @@ const styles = StyleSheet.create({
     width: "70%",
   },
   currency: { fontSize: 18, color: "#333", marginRight: 4 },
-  inputValue: { flex: 1, height: 40 },
+  input: {
+    height: 40,
+    borderColor: "gray",
+    borderWidth: 1,
+    marginBottom: 12,
+    paddingHorizontal: 8,
+    borderRadius: 4,
+  },
+  value: { flex: 1, height: 40 },
   input: {
     height: 40,
     borderColor: "gray",
@@ -296,10 +304,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     elevation: 5,
   },
-  closeButton: { color: "blue", marginTop: 15 },
+  closeButton: { color: "#388E3C", marginTop: 15, fontWeight: "bold" },
   navButton: {
     fontSize: 36,
-    color: "#212121",
+    color: "#388E3C",
     paddingHorizontal: 10,
     height: 35,
   },

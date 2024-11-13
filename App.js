@@ -120,7 +120,7 @@ const MainTabNavigator = ({ navigation }) => {
           {() => null}
         </Tab.Screen>
         <Tab.Screen
-          name="Dicas"
+          name="Cotações"
           component={Dicas}
           options={{
             tabBarIcon: ({ color, focused }) => (

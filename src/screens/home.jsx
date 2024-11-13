@@ -286,13 +286,13 @@ export default function Home() {
 
       {/* Totais do Mês */}
       <View style={styles.totalsContainer}>
-        <View style={styles.totalBox}>
+        <View style={styles.saldoContainer}>
           <Text style={styles.totalLabel}>Entradas</Text>
           <Text style={[styles.totalValue, styles.entradasColor]}>
             R$ {totalEntradas.toFixed(2)}
           </Text>
         </View>
-        <View style={styles.totalBox}>
+        <View style={styles.saldoContainer}>
           <Text style={styles.totalLabel}>Despesas</Text>
           <Text style={[styles.totalValue, styles.despesasColor]}>
             R$ {totalDespesas.toFixed(2)}
@@ -301,7 +301,6 @@ export default function Home() {
       </View>
 
       {/* Modais Separados para Entrada e Despesa */}
-
       {/* Modal para Adicionar Entrada */}
       <Modal
         animationType="slide"
@@ -397,37 +396,7 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     padding: 16,
-    backgroundColor: "#F5F5F5",
-  },
-  chartContainer: {
-    width: "100%",
-    alignItems: "center", // Centraliza o gráfico
-    marginVertical: 16,
-    backgroundColor: "#ffffff",
-    padding: 16,
-    borderRadius: 12,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-
-    elevation: 5, // Para Android
-  },
-  chartTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 12,
-    color: "#212121",
-    textAlign: "center", // Centraliza o título
-  },
-  noDataText: {
-    fontSize: 16,
-    color: "#888", // Cor do texto para dados não disponíveis
-    textAlign: "center", // Centraliza o texto
-    marginVertical: 16,
+    backgroundColor: "#E8F5E9", // Cor de fundo suave
   },
   headerContainer: {
     flexDirection: "row",
@@ -440,11 +409,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     flex: 1,
-    color: "##212121",
+    color: "#388E3C", // Cor verde escura
   },
   navButton: {
     fontSize: 30,
-    color: "#212121",
+    color: "#388E3C",
     paddingHorizontal: 10,
   },
   buttonRow: {
@@ -457,12 +426,13 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 8,
     alignItems: "center",
+    elevation: 3, // Sombra para dar profundidade
   },
   entradaButton: {
-    backgroundColor: "#2E7D32",
+    backgroundColor: "#4CAF50", // Verde para entradas
   },
   despesaButton: {
-    backgroundColor: "#FF8C00",
+    backgroundColor: "#FF9800", // Laranja para despesas
   },
   buttonText: {
     color: "#ffffff",
@@ -475,21 +445,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 16,
     alignItems: "center",
-    elevation: 2,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
-
-    elevation: 3, // Para Android
+    elevation: 4,
   },
   saldoText: {
     fontSize: 20,
     fontWeight: "600",
-    color: "#212121",
+    color: "#388E3C",
   },
   totalsContainer: {
     flexDirection: "row",
@@ -498,87 +459,86 @@ const styles = StyleSheet.create({
   },
   totalBox: {
     alignItems: "center",
+    padding: 10,
+    borderRadius: 8,
+    elevation: 4,
+    backgroundColor: "#FFFFFF", // Fundo claro para totais
   },
   totalLabel: {
     fontSize: 18,
-    color: "##9E9E9E",
+    color: "#9E9E9E",
   },
   totalValue: {
     fontSize: 19,
     fontWeight: "bold",
   },
   entradasColor: {
-    color: "#2E7D32",
+    color: "#4CAF50",
   },
   despesasColor: {
-    color: "#FF8C00",
+    color: "#FF9800",
   },
   modalOverlay: {
     flex: 1,
     justifyContent: "center",
-    backgroundColor: "rgba(0,0,0,0.5)",
+    backgroundColor: "rgba(0,0,0,0.7)", // Escurecer o fundo do modal
     padding: 16,
   },
   modalView: {
-    backgroundColor: "white",
-    borderRadius: 8,
+    backgroundColor: "#ffffff",
+    borderRadius: 12,
     padding: 20,
     elevation: 5,
-    width: "100%",
+    width: "90%",
   },
   modalTitle: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "600",
     marginBottom: 12,
     textAlign: "center",
-    color: "#333333",
+    color: "#388E3C",
   },
   input: {
     borderWidth: 1,
-    borderColor: "#cccccc",
+    borderColor: "#BDBDBD",
     borderRadius: 6,
     padding: 10,
     marginVertical: 8,
     fontSize: 16,
-    color: "##212121",
-  },
-  typeContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    marginVertical: 12,
-  },
-  typeButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderWidth: 1,
-    borderColor: "#007AFF",
-    borderRadius: 6,
-    backgroundColor: "#ffffff",
-  },
-  typeButtonSelectedEntrada: {
-    backgroundColor: "#2E7D32",
-  },
-  typeButtonSelectedDespesa: {
-    backgroundColor: "#FF8C00",
-  },
-  typeButtonDisabled: {
-    backgroundColor: "#ffffff",
-    borderColor: "#cccccc",
-  },
-  typeButtonText: {
-    color: "#007AFF",
-    fontWeight: "500",
-    fontSize: 16,
-  },
-  typeButtonTextSelected: {
-    color: "#ffffff",
+    color: "#212121",
   },
   modalButtons: {
     flexDirection: "row",
     justifyContent: "space-around",
     marginTop: 12,
   },
-  chartScrollView: {
-    paddingVertical: 8,
-  },
-});
+}); 
+  // Gráfico de Saldos
+  {/* <View style={styles.chartContainer}>
+    <Text style={styles.chartTitle}>Gráfico de Saldos</Text>
+    <BarChart
+      data={barData}
+      width={screenWidth}
+      height={220}
+      chartConfig={{
+        backgroundColor: "#ffffff",
+        backgroundGradientFrom: "#ffffff",
+        backgroundGradientTo: "#ffffff",
+        decimalPlaces: 2,
+        color: (opacity = 1) => `rgba(56, 142, 60, ${opacity})`,
+        labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+        style: {
+          borderRadius: 16,
+        },
+        propsForDots: {
+          r: "6",
+          strokeWidth: "2",
+          stroke: "#388E3C",
+        },
+      }}
+      style={{
+        marginVertical: 8,
+        borderRadius: 16,
+      }}
+    />
+  </View> */}
